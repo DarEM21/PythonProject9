@@ -90,13 +90,16 @@ def table(sex, age):
 
 
 # Галерея с загрузкой
-@app.route('/carousel')
+@app.route('/carousel', methods=['POST', 'GET'])
 def carousel():
+    folder_path = 'static/img/car_i/'
+    files = os.listdir(folder_path)
+    print(files)
     if request.method == 'POST':
         f = request.files['file']
-        f.save(f"static/img/{f.filename}")
-        return redirect('/')
-    return render_template('carousel.html', title='Марс?')
+        f.save(f"static/img/car_i/{f.filename}")
+        return redirect('/carousel')
+    return render_template('carousel.html', title='Марс?', files=files)
 
 
 # Личная карточка
